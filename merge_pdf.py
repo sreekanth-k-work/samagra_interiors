@@ -5,13 +5,14 @@ from io import BytesIO
 # Set up page config
 st.set_page_config(page_title="Samagra Interiors - PDF Merger", page_icon="📄", layout="centered")
 
-# Custom CSS for full background color
+# Custom CSS
 st.markdown(
     """
     <style>
     .stApp {
         background-color: #9BD24B !important;
     }
+
     h1 {
         color: #fff;
         text-align: center;
@@ -19,6 +20,8 @@ st.markdown(
         font-size: 3rem;
         margin: 0.5em 0;
     }
+
+    /* File uploader container */
     .stFileUploader {
         border-radius: 14px;
         background: #1f3a8a !important;
@@ -27,13 +30,31 @@ st.markdown(
     }
     .stFileUploader > div { color: #fff; }
 
-    .stButton > button {
-        background-color: #22c55e !important;
+    /* Blue buttons for Generate & Download */
+    .stButton > button,
+    .stDownloadButton > button {
+        background-color: #003366 !important;
         color: #fff !important;
-        border-radius: 8px;
-        border: none;
+        border-radius: 8px !important;
+        border: none !important;
+        font-size: 1.05rem !important;
+        padding: 0.5em 1.0em !important;
+    }
+
+    /* Dark blue success message */
+    .dark-blue-success {
+        color: #003366;
+        font-weight: bold;
+        font-size: 1.1rem;
+    }
+
+    /* Blue caption text */
+    .blue-caption {
+        color: #003366;
+        text-align: center;
         font-size: 1.05rem;
-        padding: 0.5em 1.0em;
+        font-weight: 600;
+        margin-bottom: 1em;
     }
     </style>
     """,
@@ -42,7 +63,10 @@ st.markdown(
 
 # Title
 st.markdown("<h1>Samagra Interiors - PDF Merger Tool</h1>", unsafe_allow_html=True)
-st.caption("Merge Header, Quotation, Template Background, and Footer PDFs into one final file.")
+st.markdown(
+    "<p class='blue-caption'>Merge Header, Quotation, Template Background, and Footer PDFs into one final file.</p>",
+    unsafe_allow_html=True
+)
 
 # 2x2 grid for uploads
 col1, col2 = st.columns(2)
@@ -98,6 +122,7 @@ def merge_pdfs(header, main, footer, background=None):
     output.seek(0)
     return output
 
+# Generate PDF button
 if st.button("Generate Final PDF"):
     if not quotation_pdf:
         st.error("Please upload at least the Quotation PDF.")
@@ -111,7 +136,7 @@ if st.button("Generate Final PDF"):
     else:
         try:
             final_pdf = merge_pdfs(header_pdf, quotation_pdf, footer_pdf, background_pdf)
-            st.success("✅ PDF merged successfully!")
+            st.markdown("<p class='dark-blue-success'>✅ PDF merged successfully!</p>", unsafe_allow_html=True)
             st.download_button(
                 label="⬇️ Download Final PDF",
                 data=final_pdf.getvalue(),
