@@ -98,7 +98,7 @@ def merge_pdfs(header, main, footer, background=None):
     output.seek(0)
     return output
 
-if st.button("✨ Generate Final PDF"):
+if st.button("Generate Final PDF"):
     if not quotation_pdf:
         st.error("Please upload at least the Quotation PDF.")
     elif not all([
