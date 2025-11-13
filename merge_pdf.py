@@ -56,6 +56,14 @@ st.markdown(
         font-weight: 600;
         margin-bottom: 1em;
     }
+
+    /* Custom blue error message */
+    .blue-error {
+        color: #003366 !important;
+        font-weight: bold;
+        font-size: 1.1rem !important;
+        text-align: center;
+    }
     </style>
     """,
     unsafe_allow_html=True
@@ -125,7 +133,7 @@ def merge_pdfs(header, main, footer, background=None):
 # Generate PDF button
 if st.button("Generate Final PDF"):
     if not quotation_pdf:
-        st.error("Please upload at least the Quotation PDF.")
+        st.markdown("<p class='blue-error'>⚠️ Please upload at least the Quotation PDF.</p>", unsafe_allow_html=True)
     elif not all([
         check_size(header_pdf),
         check_size(quotation_pdf),
